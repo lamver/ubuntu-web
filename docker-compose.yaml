@@ -1,9 +1,8 @@
-  services:
-  ubuntu-rdp:
-    image: danielguerra/ubuntu-xrdp
-    container_name: ubuntu_rdp_desktop
-    #ports:
-    #  - "3389:3389"
-    environment:
-      - USER_PASSWORD=${USER_PASSWORD}
+services:
+  ubuntu-desktop:
+    image: dorowu/ubuntu-desktop-lxde-vnc
+    container_name: ubuntu_web_desktop
+    ports:
+      - "6080:80"
+    shm_size: "512mb"
     restart: unless-stopped
