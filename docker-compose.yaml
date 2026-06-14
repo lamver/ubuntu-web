@@ -1,6 +1,7 @@
 services:
   ubuntu-desktop:
-    image: 'lscr.io/linuxserver/webtop:ubuntu-mate'
+    # Тег :ubuntu-mate-kasmvnc переключает контейнер на чистый KasmVNC без багнутых видео-плееров
+    image: 'lscr.io/linuxserver/webtop:ubuntu-mate-kasmvnc'
     container_name: ubuntu_gui
     security_opt:
       - 'seccomp:unconfined'
@@ -15,14 +16,7 @@ services:
       WEBTOP_USER: abc
       PASSWORD: '${USER_PASSWORD}'
       KASMVNC_AUTO_SSL: '0'
-      # wmp активирует программный рендеринг процессором (подходит для CPU-only)
-      WEBTOP_RENDERER: wmp
-      # Включаем аудио, чтобы убрать цикличную ошибку pa_simple_new из логов
-      ENABLE_AUDIO: 'true'
-      # Переменные KasmVNC для улучшения качества картинки на CPU (по умолчанию 45):
-      CUSTOM_CRF: '23'          # Чем ниже число, тем выше четкость (23 — стандарт для x264)
-      CUSTOM_FPS: '30'          # Поднимаем плавность интерфейса с 17 до 30 кадров
     volumes:
       - './config:/config'
-    shm_size: 2gb               # Увеличено до 2gb, так как CPU-рендеринг требует больше памяти
+    shm_size: 2gb
     restart: unless-stopped
