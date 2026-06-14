@@ -19,6 +19,6 @@ services:
       - ./config:/config
     ports:
       # Возвращаем стандартный HTTP порт контейнера (3000) на ваш порт (3005)
-      - "127.0.0.1:3005:3000" 
+      - "0.0.0.0:3005:3000" 
     shm_size: "1gb"
     restart: unless-stopped
