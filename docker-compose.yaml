@@ -1,6 +1,24 @@
 services:
   ubuntu-desktop:
-    image: dorowu/ubuntu-desktop-lxde-vnc:latest
-    container_name: ubuntu_web_desktop
-    shm_size: 2gb
+    image: lscr.io/linuxserver/webtop:ubuntu-mate
+    container_name: ubuntu_gui
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - SUBFOLDER=/
+      - WEBTOP_USER=abc
+      - PASSWORD=${USER_PASSWORD}
+      # Эта строка отключает HTTPS и чинит ошибку "400 Bad Request":
+      - KASMVNC_AUTO_SSL=localhost
+      # Автоматическая смена паролей в системе при старте:
+      #- S6_STAGE2_HOOK=echo "root:${ROOT_PASSWORD}" | chpasswd && echo "abc:${USER_PASSWORD}" | chpasswd
+    volumes:
+      - ./config:/config
+    ports:
+      # Возвращаем стандартный HTTP порт контейнера (3000) на ваш порт (3005)
+      - "127.0.0.1:3005:3000" 
+    shm_size: "1gb"
     restart: unless-stopped
