@@ -13,7 +13,7 @@ services:
       - WEBTOP_USER=abc
       - PASSWORD=${USER_PASSWORD}
       # Эта строка отключает HTTPS и чинит ошибку "400 Bad Request":
-      - KASMVNC_AUTO_SSL=1
+      - KASMVNC_AUTO_SSL=0
       # Автоматическая смена паролей в системе при старте:
       #- S6_STAGE2_HOOK=echo "root:${ROOT_PASSWORD}" | chpasswd && echo "abc:${USER_PASSWORD}" | chpasswd
     volumes:
