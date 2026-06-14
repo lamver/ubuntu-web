@@ -4,7 +4,9 @@ services:
     container_name: ubuntu_gui
     security_opt:
       - seccomp:unconfined
+      - apparmor:unconfined
     privileged: true
+    ipc: host
     environment:
       - PUID=1000
       - PGID=1000
