@@ -1,10 +1,10 @@
 services:
   ubuntu-desktop:
-    image: lscr.io/linuxserver/webtop:ubuntu-mate
+    image: 'lscr.io/linuxserver/webtop:ubuntu-mate'
     container_name: ubuntu_gui
     security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
+      - 'seccomp:unconfined'
+      - 'apparmor:unconfined'
     privileged: true
     ipc: host
     environment:
@@ -14,13 +14,13 @@ services:
       SUBFOLDER: /
       WEBTOP_USER: abc
       PASSWORD: '${USER_PASSWORD}'
-      # ОТКЛЮЧАЕМ ВСЁ СЛОМАННОЕ В СТИЛЕ COOLIFY (БЕЗ ДЕФИСОВ! ЧЕРЕЗ ДВОЕТОЧИЕ):
       KASMVNC_AUTO_SSL: '0'
-      WEBTOP_RENDERER: 'wmp'
-      ENABLE_AUDIO: 'false'
+      WEBTOP_RENDERER: wmp
+      ENABLE_AUDIO: 'true' # Изменено на true для инициализации PulseAudio
     volumes:
-      # ВНИМАНИЕ: Если Coolify ругается на локальный путь "./config", 
-      # верни сюда полный путь, который он генерировал сам
-      - ./config:/config
-    shm_size: "1gb"
+      - './config:/config'
+    # Пробрасываем видеокарту хоста для работы VAAPI:
+    devices:
+      - /dev/dri:/dev/dri
+    shm_size: 1gb
     restart: unless-stopped
