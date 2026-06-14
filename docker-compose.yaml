@@ -1,7 +1,6 @@
 services:
   ubuntu-desktop:
-    # Тег :ubuntu-mate-kasmvnc переключает контейнер на чистый KasmVNC без багнутых видео-плееров
-    image: 'lscr.io/linuxserver/webtop:ubuntu-mate-kasmvnc'
+    image: 'lscr.io/linuxserver/webtop:ubuntu-mate' # Возвращаем официальный, рабочий тег
     container_name: ubuntu_gui
     security_opt:
       - 'seccomp:unconfined'
@@ -16,6 +15,13 @@ services:
       WEBTOP_USER: abc
       PASSWORD: '${USER_PASSWORD}'
       KASMVNC_AUTO_SSL: '0'
+      WEBTOP_RENDERER: wmp
+      ENABLE_AUDIO: 'true'
+      # Скрытые переменные Selkies, которые отключат сжатие прямо при сборке контейнера:
+      SELKIES_ENCODER: 'x264enc'    # Переключаем Selkies на программный кодек ЦП
+      SELKIES_FORCE_CPU: 'true'    # Полный запрет на поиск видеокарты хоста
+      SELKIES_DEFAULT_444: 'true'  # Форсируем максимальную четкость текста без сжатия цвета
+      SELKIES_FPS: '30'            # Фиксируем плавность на 30 FPS
     volumes:
       - './config:/config'
     shm_size: 2gb
