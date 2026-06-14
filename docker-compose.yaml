@@ -1,20 +1,6 @@
 services:
   ubuntu-desktop:
-    image: alpine:latest
+    image: dorowu/ubuntu-desktop-lxde-vnc:latest
     container_name: ubuntu_web_desktop
     shm_size: 2gb
     restart: unless-stopped
-    environment:
-      - LANG=en_US.UTF-8
-      - COOLIFY_URL=https://ms-9.aisearch.tech
-    entrypoint: |
-      /bin/sh -c "
-      apk update && apk add xfce4 xfce4-terminal tigervnc novnc websockify bash curl
-      mkdir -p ~/.vnc
-      echo 'password' | vncpasswd -f > ~/.vnc/passwd
-      chmod 600 ~/.vnc/passwd
-      echo -e '#!/bin/sh\nstartxfce4 &' > ~/.vnc/xstartup
-      chmod +x ~/.vnc/xstartup
-      vncserver :1 -geometry 1280x720 -depth 24
-      novnc_proxy --vnc localhost:5901 --listen 8080
-      "
