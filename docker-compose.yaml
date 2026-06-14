@@ -15,12 +15,14 @@ services:
       WEBTOP_USER: abc
       PASSWORD: '${USER_PASSWORD}'
       KASMVNC_AUTO_SSL: '0'
+      # wmp активирует программный рендеринг процессором (подходит для CPU-only)
       WEBTOP_RENDERER: wmp
-      ENABLE_AUDIO: 'true' # Изменено на true для инициализации PulseAudio
+      # Включаем аудио, чтобы убрать цикличную ошибку pa_simple_new из логов
+      ENABLE_AUDIO: 'true'
+      # Переменные KasmVNC для улучшения качества картинки на CPU (по умолчанию 45):
+      CUSTOM_CRF: '23'          # Чем ниже число, тем выше четкость (23 — стандарт для x264)
+      CUSTOM_FPS: '30'          # Поднимаем плавность интерфейса с 17 до 30 кадров
     volumes:
       - './config:/config'
-    # Пробрасываем видеокарту хоста для работы VAAPI:
-    devices:
-      - /dev/dri:/dev/dri
-    shm_size: 1gb
+    shm_size: 2gb               # Увеличено до 2gb, так как CPU-рендеринг требует больше памяти
     restart: unless-stopped
