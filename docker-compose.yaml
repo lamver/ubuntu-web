@@ -1,6 +1,6 @@
 services:
   ubuntu-desktop:
-    image: lscr.io/linuxserver/webtop:ubuntu-mate
+    image: lscr.io/linuxserver/webtop:ubuntu-xfce
     container_name: ubuntu_gui
     security_opt:
       - seccomp:unconfined
