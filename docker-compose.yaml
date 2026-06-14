@@ -14,14 +14,15 @@ services:
       - SUBFOLDER=/
       - WEBTOP_USER=abc
       - PASSWORD=${USER_PASSWORD}
-      # Эта строка отключает HTTPS и чинит ошибку "400 Bad Request":
+      # Полностью отключаем встроенный SSL
       - KASMVNC_AUTO_SSL=0
-      # Автоматическая смена паролей в системе при старте:
-      #- S6_STAGE2_HOOK=echo "root:${ROOT_PASSWORD}" | chpasswd && echo "abc:${USER_PASSWORD}" | chpasswd
+      # ИСПРАВЛЕНО: знак = вместо двоеточия
+      - WEBTOP_RENDERER=wmp
+      # ИСПРАВЛЕНО: знак = вместо двоеточия
+      - ENABLE_AUDIO=false
     volumes:
+      # ВНИМАНИЕ: Если Coolify ругается на локальный путь "./config", 
+      # верни сюда полный путь, который он генерировал сам
       - ./config:/config
-    #ports:
-      # Возвращаем стандартный HTTP порт контейнера (3000) на ваш порт (3005)
-    #  - "127.0.0.1:3005:3000" 
     shm_size: "1gb"
     restart: unless-stopped
