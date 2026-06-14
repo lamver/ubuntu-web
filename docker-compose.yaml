@@ -8,18 +8,16 @@ services:
     privileged: true
     ipc: host
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Berlin
-      - SUBFOLDER=/
-      - WEBTOP_USER=abc
-      - PASSWORD=${USER_PASSWORD}
-      # Полностью отключаем встроенный SSL
-      - KASMVNC_AUTO_SSL=0
-      # ИСПРАВЛЕНО: знак = вместо двоеточия
-      - WEBTOP_RENDERER=wmp
-      # ИСПРАВЛЕНО: знак = вместо двоеточия
-      - ENABLE_AUDIO=false
+      PUID: '1000'
+      PGID: '1000'
+      TZ: Europe/Berlin
+      SUBFOLDER: /
+      WEBTOP_USER: abc
+      PASSWORD: '${USER_PASSWORD}'
+      # ОТКЛЮЧАЕМ ВСЁ СЛОМАННОЕ В СТИЛЕ COOLIFY (БЕЗ ДЕФИСОВ! ЧЕРЕЗ ДВОЕТОЧИЕ):
+      KASMVNC_AUTO_SSL: '0'
+      WEBTOP_RENDERER: 'wmp'
+      ENABLE_AUDIO: 'false'
     volumes:
       # ВНИМАНИЕ: Если Coolify ругается на локальный путь "./config", 
       # верни сюда полный путь, который он генерировал сам
